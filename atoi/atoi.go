@@ -14,7 +14,7 @@ func AtoiImproved(s string) (int, error) {
 		// Check 1st char for sign.
 		case '+', '-':
 			if sLen == 1 {
-				return 0, &strconv.NumError{fnAtoi, s, ErrSyntax}
+				return 0, &strconv.NumError{fnAtoi, s, strconv.ErrSyntax}
 			}
 			first = 1
 		}
@@ -25,7 +25,7 @@ func AtoiImproved(s string) (int, error) {
 			for _, ch := range s[first:] {
 				ch -= '0'
 				if ch > 9 {
-					return 0, &strconv.NumError{fnAtoi, s, ErrSyntax}
+					return 0, &strconv.NumError{fnAtoi, s, strconv.ErrSyntax}
 				}
 				n = n*10 + int(ch)
 			}
