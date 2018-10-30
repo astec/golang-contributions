@@ -17,8 +17,9 @@ func BenchmarkAtoi(b *testing.B) {
 
 	benchmark := func(b *testing.B, v string, f func(string) (int, error)) {
 		for i := 0; i < b.N; i++ {
-			i, _ := f(v)
-			BenchSink += i
+			f(v)
+			// i, _ := f(v)
+			// BenchSink += i
 		}
 	}
 
@@ -39,8 +40,8 @@ func BenchmarkAtoi(b *testing.B) {
 	compare("minus_only", "-")
 	compare("plus_only", "+")
 
-	b.Log(BenchSink)
+	// b.Log(BenchSink)
 }
 
-var BenchSink int
+// var BenchSink int
 var lastErr error
