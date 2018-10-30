@@ -2,6 +2,8 @@ package gocontrib
 
 import "strconv"
 
+const intSize = 32 << (^uint(0) >> 63)
+
 func AtoiImproved(s string) (int, error) {
 	const fnAtoi = "Atoi"
 
