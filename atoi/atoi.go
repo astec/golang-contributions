@@ -4,7 +4,8 @@ import "strconv"
 
 const intSize = 32 << (^uint(0) >> 63)
 
-// Is used by Atoi() and may be used in future by ParseInt() to determine if fast path is available.
+// Is used by Atoi() and may be used in future by ParseInt()
+// to determine if fast path is available for small integers that fit int type.
 func isFastPathAtoi(sLen int) bool {
 	return intSize == 32 && 0 < sLen && sLen < 10 || intSize == 64 && 0 < sLen && sLen < 19
 }
