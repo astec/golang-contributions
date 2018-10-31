@@ -11,20 +11,20 @@ func AtoiImproved(s string) (int, error) {
 
 	if intSize == 32 && 0 < sLen && sLen < 10 || intSize == 64 && 0 < sLen && sLen < 19 {
 		// Fast path for small integers that fit int type.
-		first := 0
+		startPos := 0
 		neg := s[0] == '-'
 		if neg || s[0] == '+' {
 			if sLen < 2 {
 				// Sign only strings are bad.
 				return 0, &strconv.NumError{fnAtoi, s, strconv.ErrSyntax}
 			}
-			first = 1
+			startPos = 1
 		}
-		n := int(s[first] - '0') // First time no need to multiply previous n by 10.
+		n := int(s[startPos] - '0') // First time no need to multiply previous n by 10.
 		if n > 9 {
 			return 0, &strconv.NumError{fnAtoi, s, strconv.ErrSyntax}
 		}
-		for i := first+1; i < sLen; i++ {
+		for i := startPos+1; i < sLen; i++ {
 			ch := s[i] - '0'
 			if ch > 9 {
 				return 0, &strconv.NumError{fnAtoi, s, strconv.ErrSyntax}
