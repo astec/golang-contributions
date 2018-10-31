@@ -14,15 +14,17 @@ func AtoiImproved(s string) (int, error) {
 		first := 0
 		neg := s[0] == '-'
 		if neg || s[0] == '+' {
-			// Check 1st char for sign.
-			// case '+', '-':
 			if sLen < 2 {
+				// Sign only strings are bad.
 				return 0, &strconv.NumError{fnAtoi, s, strconv.ErrSyntax}
 			}
 			first = 1
 		}
-		n := 0
-		for i := first; i < sLen; i++ {
+		n := int(s[first] - '0') // First time no need to multiply previous n by 10.
+		if n > 9 {
+			return 0, &strconv.NumError{fnAtoi, s, strconv.ErrSyntax}
+		}
+		for i := first+1; i < sLen; i++ {
 			ch := s[i] - '0'
 			if ch > 9 {
 				return 0, &strconv.NumError{fnAtoi, s, strconv.ErrSyntax}

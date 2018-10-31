@@ -6,10 +6,29 @@ import (
 )
 
 func TestAtoiImproved(t *testing.T) {
-	v, err := AtoiImproved("+12")
+	var v int
+	var err error
+
+	v, err = AtoiImproved("1")
+	if v != 1 {
+		t.Error("v != 1")
+	}
+
+	v, err = AtoiImproved("12")
+	if v != 12 {
+		t.Error("v != 12")
+	}
+
+	v, err = AtoiImproved("+12")
+	if v != 12 {
+		t.Error("v != 12")
+	}
 	t.Logf("v=%v, err=%v", v, err)
 
 	v, err = AtoiImproved("-12")
+	if v != -12 {
+		t.Error("v != 12")
+	}
 	t.Logf("v=%v, err=%v", v, err)
 }
 
@@ -25,16 +44,19 @@ func BenchmarkAtoi(b *testing.B) {
 
 	compare := func(name, v string) {
 		for i := 1; i < 2; i++ {
-			b.Run(name+"_original_"+strconv.Itoa(i), func(b *testing.B) {
+			b.Run(name+"_original_"+strconv.Itoa(i)+"_"+v, func(b *testing.B) {
 				benchmark(b, v, strconv.Atoi)
 			})
-			b.Run(name+"_improved_"+strconv.Itoa(i), func(b *testing.B) {
+			b.Run(name+"_improved_"+strconv.Itoa(i)+"_"+v, func(b *testing.B) {
 				benchmark(b, v, AtoiImproved)
 			})
 		}
 	}
 
+	compare("unsigned", "1")
 	compare("unsigned", "12")
+	compare("positive", "+1")
+	compare("negative", "-1")
 	compare("positive", "+12")
 	compare("negative", "-12")
 	compare("minus_only", "-")
